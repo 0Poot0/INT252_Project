@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: windows-latest  # Using Windows-based runner
+    runs-on: ubuntu-latest
 
     steps:
       # Checkout the code from your repository
@@ -22,10 +22,10 @@ jobs:
       # Log in to Docker Hub (hardcode username and password)
       - name: Log in to Docker Hub
         run: |
-          echo $Toothpaste | docker login -u $antaratalapatra --password-stdin
+          echo "Toothpaste" | docker login -u "antaratalapatra" --password-stdin
 
       # Build and push the Docker image to Docker Hub with the 'latest' tag
       - name: Build and push Docker image
         run: |
-          docker build -t $antaratalapatra/react-vite-app:latest .
-          docker push $antaratalapatra/react-vite-app:latest
+          docker build -t antaratalapatra/react-vite-app:latest .
+          docker push antaratalapatra/react-vite-app:latest
