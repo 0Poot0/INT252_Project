@@ -1,41 +1,31 @@
- name: CI/CD Pipeline for React Vite App
+name: CI/CD Pipeline
 
+# Trigger the pipeline on push to the 'main' branch
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-and-push:
+    runs-on: windows-latest  # Using Windows-based runner
 
     steps:
+      # Checkout the code from your repository
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Set up Docker Buildx (to build multi-platform images)
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v1
 
+      # Log in to Docker Hub (hardcode username and password)
       - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: your-dockerhub-username/my-vite-app:latest
-
-      - name: Deploy to Server
-        if: github.ref == 'refs/heads/main'
         run: |
-          ssh username@your-server-ip 'docker pull your-dockerhub-username/my-vite-app:latest && docker-compose up -d'
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          echo $Toothpaste | docker login -u $antaratalapatra --password-stdin
 
+      # Build and push the Docker image to Docker Hub with the 'latest' tag
+      - name: Build and push Docker image
+        run: |
+          docker build -t $antaratalapatra/react-vite-app:latest .
+          docker push $antaratalapatra/react-vite-app:latest
