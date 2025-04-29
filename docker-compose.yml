@@ -7,7 +7,7 @@ networks:
 
 services:
   web:
-    image: antaratalapatra/react-vite-app:latest
+    image: antaratalapatra/react-vite-app:20250430040612
     ports:
       - "3000:80"
     environment:

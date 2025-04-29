@@ -124,7 +124,7 @@ const Dashboard = () => {
               </div>
             ) : (
               <div className="grid-sm">
-                <p>Personal budgeting is the secret to financial freedom.</p>
+                <p>Antara's budgeting is the secret to financial freedom.</p>
                 <p>Create a budget to get started!</p>
                 <AddBudgetForm />
               </div>
