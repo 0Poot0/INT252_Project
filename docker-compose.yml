@@ -1,0 +1,29 @@
+version: "3.8"
+
+networks:
+  app-network:
+    driver: overlay
+    attachable: true
+
+services:
+  web:
+    image: antaratalapatra/react-vite-app:latest
+    ports:
+      - "3000:80"
+    environment:
+      NODE_ENV: production
+    networks:
+      - app-network
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      placement:
+        constraints:
+          - node.role == manager
